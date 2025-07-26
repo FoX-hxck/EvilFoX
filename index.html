@@ -321,9 +321,15 @@
       z-index: 2;
     }
 
-    /* Hide original esp button and use custom styling */
+    /* Hide original esp button visually but keep it functional */
     esp-web-install-button {
-      display: none;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
     }
 
     /* Instructions */
@@ -681,21 +687,21 @@
     <div class="header">
       <div class="logo">🦊 EVILFOX</div>
       <div class="title">Firmware Flasher</div>
-      <div class="subtitle">ESP32 USB Installation • Chrome/Edge/Opera</div>
+
     </div>
 
     <div class="status-bar">
       <div class="status-item">
         <div class="status-dot"></div>
-        <span>System Ready</span>
+        <span>Evil Twin</span>
       </div>
       <div class="status-item">
         <div class="status-dot"></div>
-        <span>USB Detected</span>
+        <span>Steal Credentials</span>
       </div>
       <div class="status-item">
         <div class="status-dot"></div>
-        <span>Secure Mode</span>
+        <span>Scan Wifi</span>
       </div>
     </div>
 
@@ -776,54 +782,106 @@
       if (customBtn && hiddenBtn) {
         customBtn.addEventListener('click', function(e) {
           e.preventDefault();
+          e.stopPropagation();
           
           // Visual feedback
           this.style.transform = 'scale(0.95)';
-          this.innerHTML = '<span class="btn-icon">⚡</span><span class="btn-text">Connexion...</span>';
+          this.innerHTML = '<span class="btn-icon">⚡</span><span class="btn-text">Initialisation...</span>';
           
           setTimeout(() => {
             this.style.transform = 'translateY(-3px) scale(1.02)';
-            // Trigger the actual ESP install button
-            hiddenBtn.click();
-          }, 200);
-          
-          // Reset button after 3 seconds
-          setTimeout(() => {
-            this.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
-          }, 3000);
+            
+            // Trigger the actual ESP install button click
+            try {
+              // Try different methods to trigger the ESP button
+              const espButton = hiddenBtn.shadowRoot?.querySelector('button') || hiddenBtn.querySelector('button') || hiddenBtn;
+              
+              if (espButton && typeof espButton.click === 'function') {
+                espButton.click();
+              } else {
+                // Fallback: dispatch click event
+                const clickEvent = new MouseEvent('click', {
+                  bubbles: true,
+                  cancelable: true,
+                  view: window
+                });
+                hiddenBtn.dispatchEvent(clickEvent);
+              }
+            } catch (error) {
+              console.error('Erreur lors du déclenchement du bouton ESP:', error);
+              // Fallback: try direct click
+              hiddenBtn.click();
+            }
+          }, 300);
         });
         
-        // Listen for ESP button state changes
-        const observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes') {
-              const state = hiddenBtn.getAttribute('state');
-              if (state === 'connecting') {
-                customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Connexion...</span>';
-                customBtn.style.background = 'linear-gradient(135deg, #1a5d1a 0%, #2d8f2d 50%, #4caf50 100%)';
-              } else if (state === 'installing') {
-                customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Installation...</span>';
+        // Monitor ESP button state changes
+        let lastState = '';
+        const checkState = () => {
+          const currentState = hiddenBtn.getAttribute('state') || 'idle';
+          
+          if (currentState !== lastState) {
+            lastState = currentState;
+            
+            switch (currentState) {
+              case 'connecting':
+                customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Connexion USB...</span>';
+                customBtn.style.background = 'linear-gradient(135deg, #1a4d1a 0%, #2d7a2d 50%, #4caf50 100%)';
+                break;
+                
+              case 'installing':
+                customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Flash en cours...</span>';
                 customBtn.style.background = 'linear-gradient(135deg, #b8860b 0%, #daa520 50%, #ffd700 100%)';
-              } else if (state === 'installed') {
-                customBtn.innerHTML = '<span class="btn-icon">✅</span><span class="btn-text">Installé!</span>';
+                break;
+                
+              case 'installed':
+                customBtn.innerHTML = '<span class="btn-icon">✅</span><span class="btn-text">Flash Terminé!</span>';
                 customBtn.style.background = 'linear-gradient(135deg, #1a5d1a 0%, #2d8f2d 50%, #4caf50 100%)';
                 setTimeout(() => {
                   customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
                   customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
-                }, 5000);
-              } else if (state === 'error') {
-                customBtn.innerHTML = '<span class="btn-icon">❌</span><span class="btn-text">Erreur</span>';
+                }, 4000);
+                break;
+                
+              case 'error':
+                customBtn.innerHTML = '<span class="btn-icon">❌</span><span class="btn-text">Erreur Flash</span>';
                 customBtn.style.background = 'linear-gradient(135deg, #5d1a1a 0%, #8f2d2d 50%, #af4c4c 100%)';
                 setTimeout(() => {
                   customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Réessayer</span>';
                   customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
                 }, 3000);
-              }
+                break;
+                
+              default:
+                if (customBtn.innerHTML.includes('Initialisation')) {
+                  setTimeout(() => {
+                    customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
+                    customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
+                  }, 2000);
+                }
+                break;
             }
-          });
+          }
+        };
+        
+        // Check state periodically
+        setInterval(checkState, 200);
+        
+        // Also use MutationObserver for immediate updates
+        const observer = new MutationObserver(checkState);
+        observer.observe(hiddenBtn, { 
+          attributes: true, 
+          attributeFilter: ['state'] 
         });
         
-        observer.observe(hiddenBtn, { attributes: true });
+        // Listen for ESP events if available
+        hiddenBtn.addEventListener('state-changed', checkState);
+        hiddenBtn.addEventListener('install-start', () => {
+          customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Démarrage...</span>';
+        });
+        hiddenBtn.addEventListener('install-progress', () => {
+          customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Installation...</span>';
+        });
       }
     });
 
