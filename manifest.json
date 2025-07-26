@@ -4,7 +4,13 @@
   "builds": [
     {
       "chipFamily": "ESP32",
-      "path": "EvilFoX.bin",
+      "parts": [
+        {
+          "path": "EvilFoX.bin",
+          "offset": 0
+        }
+      ],
+      "baudRate": 115200,
       "improv": false
     }
   ]
