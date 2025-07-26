@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flasher EvilFoX Firmware</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0a0a0a;
+      --secondary: #1a0d2e;
+      --accent: #8b5cf6;
+      --success: #00ff88;
+      --warning: #ff6b35;
+      --danger: #ff3366;
+      --text: #e0e0e0;
+      --text-muted: #888888;
+      --bg: #000000;
+      --card-bg: #111111;
+      --border: #333333;
+      --shadow: rgba(139, 92, 246, 0.3);
+      --glow: rgba(139, 92, 246, 0.6);
+    }
+
+    body {
+      font-family: 'Courier New', 'Monaco', monospace;
+      background: linear-gradient(135deg, var(--bg) 0%, #0d0d0d 50%, #1a0d2e 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Matrix-style background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      z-index: -1;
+      animation: matrix-drift 20s linear infinite;
+    }
+
+    @keyframes matrix-drift {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(20px); }
+    }
+
+    .flasher-container {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flasher-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: line-scan 3s infinite;
+    }
+
+    @keyframes line-scan {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, var(--accent), var(--success));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pulse-glow 3s infinite alternate;
+    }
+
+    @keyframes pulse-glow {
+      from { filter: brightness(1); }
+      to { filter: brightness(1.2); }
+    }
+
+    .title {
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px var(--glow);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .warning-banner {
+      background: linear-gradient(135deg, var(--warning), #d35400);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .warning-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: warning-flash 2s infinite;
+    }
+
+    @keyframes warning-flash {
+      0%, 100% { left: -100%; }
+      50% { left: 100%; }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* ESP Web Tools Button */
+    esp-web-install-button {
+      width: 100%;
+      margin-bottom: 20px;
+      --esp-tools-button-background: linear-gradient(135deg, var(--accent), #7c3aed);
+      --esp-tools-button-color: white;
+      --esp-tools-button-border: 2px solid var(--accent);
+      --esp-tools-button-hover-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .flasher-container {
+        padding: 30px 20px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+      
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10.0.0/dist/web/install-button.js?module"></script>
+</head>
+<body>
+  <div class="flasher-container">
+    <div class="header">
+      <div class="logo">🦊 EvilFoX Flasher</div>
+      <h1 class="title">Flasher EvilFoX Firmware</h1>
+      <p class="subtitle">Pour ESP32 via USB</p>
+    </div>
+
+    <div class="warning-banner">
+      ⚠️ ÉDUCATIF UNIQUEMENT - N'utilisez ce projet que sur vos propres réseaux
+    </div>
+
+    <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    <p class="subtitle">Connectez votre ESP32 en USB et cliquez sur "Install".</p>
+
+    <div class="footer">
+      <p>🔒 Flash direct via Web Serial API</p>
+      <p>Compatible avec Chrome, Edge et Opera (versions récentes)</p>
+    </div>
+  </div>
+</body>
+</html>

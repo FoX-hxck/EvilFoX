@@ -1,0 +1,11 @@
+{
+  "name": "EvilFoX Firmware",
+  "version": "1.0.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "path": "EvilFoX.bin",
+      "improv": false
+    }
+  ]
+}
