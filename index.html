@@ -910,7 +910,7 @@
     <div class="updates">
       <div class="updates-header">
         <span>🆕</span>
-        <h3>Dernières nouveautés 1.0.1</h3>
+        <h3>Dernières nouveautés</h3>
       </div>
       <div class="update-item">
         <span class="update-date">2025-07-29</span>
@@ -984,4 +984,119 @@
           
           // Visual feedback
           this.style.transform = 'scale(0.95)';
-          this.innerHTML = '
+          this.innerHTML = '<span class="btn-icon">⚡</span><span class="btn-text">Initialisation...</span>';
+          
+          setTimeout(() => {
+            this.style.transform = 'translateY(-3px) scale(1.02)';
+            
+            // Trigger the actual ESP install button click
+            try {
+              // Try different methods to trigger the ESP button
+              const espButton = hiddenBtn.shadowRoot?.querySelector('button') || hiddenBtn.querySelector('button') || hiddenBtn;
+              
+              if (espButton && typeof espButton.click === 'function') {
+                espButton.click();
+              } else {
+                // Fallback: dispatch click event
+                const clickEvent = new MouseEvent('click', {
+                  bubbles: true,
+                  cancelable: true,
+                  view: window
+                });
+                hiddenBtn.dispatchEvent(clickEvent);
+              }
+            } catch (error) {
+              console.error('Erreur lors du déclenchement du bouton ESP:', error);
+              // Fallback: try direct click
+              hiddenBtn.click();
+            }
+          }, 300);
+        });
+        
+        // Monitor ESP button state changes
+        let lastState = '';
+        const checkState = () => {
+          const currentState = hiddenBtn.getAttribute('state') || 'idle';
+          
+          if (currentState !== lastState) {
+            lastState = currentState;
+            
+            switch (currentState) {
+              case 'connecting':
+                customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Connexion USB...</span>';
+                customBtn.style.background = 'linear-gradient(135deg, #1a4d1a 0%, #2d7a2d 50%, #4caf50 100%)';
+                break;
+                
+              case 'installing':
+                customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Flash en cours...</span>';
+                customBtn.style.background = 'linear-gradient(135deg, #b8860b 0%, #daa520 50%, #ffd700 100%)';
+                break;
+                
+              case 'installed':
+                customBtn.innerHTML = '<span class="btn-icon">✅</span><span class="btn-text">Flash Terminé!</span>';
+                customBtn.style.background = 'linear-gradient(135deg, #1a5d1a 0%, #2d8f2d 50%, #4caf50 100%)';
+                setTimeout(() => {
+                  customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
+                  customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
+                }, 4000);
+                break;
+                
+              case 'error':
+                customBtn.innerHTML = '<span class="btn-icon">❌</span><span class="btn-text">Erreur Flash</span>';
+                customBtn.style.background = 'linear-gradient(135deg, #5d1a1a 0%, #8f2d2d 50%, #af4c4c 100%)';
+                setTimeout(() => {
+                  customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Réessayer</span>';
+                  customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
+                }, 3000);
+                break;
+                
+              default:
+                if (customBtn.innerHTML.includes('Initialisation')) {
+                  setTimeout(() => {
+                    customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
+                    customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
+                  }, 2000);
+                }
+                break;
+            }
+          }
+        };
+        
+        // Check state periodically
+        setInterval(checkState, 200);
+        
+        // Also use MutationObserver for immediate updates
+        const observer = new MutationObserver(checkState);
+        observer.observe(hiddenBtn, { 
+          attributes: true, 
+          attributeFilter: ['state'] 
+        });
+        
+        // Listen for ESP events if available
+        hiddenBtn.addEventListener('state-changed', checkState);
+        hiddenBtn.addEventListener('install-start', () => {
+          customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Démarrage...</span>';
+        });
+        hiddenBtn.addEventListener('install-progress', () => {
+          customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Installation...</span>';
+        });
+      }
+    });
+
+    // Add matrix-style digital rain effect on hover
+    document.querySelector('.container').addEventListener('mouseenter', function() {
+      this.style.boxShadow = `
+        0 0 40px rgba(157, 78, 221, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1)
+      `;
+    });
+
+    document.querySelector('.container').addEventListener('mouseleave', function() {
+      this.style.boxShadow = `
+        0 0 20px rgba(157, 78, 221, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1)
+      `;
+    });
+  </script>
+</body>
+</html>
