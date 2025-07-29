@@ -37,8 +37,6 @@
       align-items: center;
       padding: 20px;
       position: relative;
-      /* MODIFICATION: Supprimer overflow: hidden; */
-      /* overflow: hidden; */
     }
 
     /* Animated background particles */
@@ -50,8 +48,6 @@
       height: 100%;
       pointer-events: none;
       z-index: 1;
-      /* MODIFICATION: Permettre aux particules de défiler avec le contenu */
-      /* Si vous voulez que les particules restent fixes, vous pouvez ajouter position: fixed; ici */
     }
 
     .particle {
@@ -96,7 +92,6 @@
         var(--shadow-glow),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
       animation: containerPulse 4s ease-in-out infinite;
-      /* MODIFICATION: Ajouter une marge verticale pour permettre le défilement si le contenu est plus grand que la fenêtre */
       margin: 20px auto; 
     }
 
@@ -156,6 +151,86 @@
       font-size: 0.95rem;
       margin-bottom: 25px;
       opacity: 0.9;
+    }
+
+    /* Navigation stylée */
+    .nav-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .template-nav {
+      position: relative;
+      display: inline-block;
+    }
+
+    .template-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d2d5f 100%);
+      border: 2px solid transparent;
+      border-radius: 25px;
+      color: var(--accent-bright);
+      font-family: 'Orbitron', monospace;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 
+        0 4px 15px rgba(157, 78, 221, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .template-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(157, 78, 221, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .template-btn:hover::before {
+      left: 100%;
+    }
+
+    .template-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      background: linear-gradient(135deg, #1a1a3a 0%, #2d2d5f 50%, #3f3f7f 100%);
+      border-color: var(--accent-purple);
+      box-shadow: 
+        0 8px 25px rgba(157, 78, 221, 0.4),
+        0 0 20px rgba(199, 125, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: var(--accent-neon);
+    }
+
+    .template-btn:active {
+      transform: translateY(0) scale(0.98);
+      transition: all 0.1s ease;
+    }
+
+    .template-icon {
+      font-size: 1.1rem;
+      animation: templateIconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes templateIconFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-2px) rotate(5deg);
+      }
     }
 
     /* Status indicators */
@@ -445,8 +520,6 @@
     @media (max-width: 768px) {
       body {
         padding: 15px;
-        /* MODIFICATION: Supprimer align-items: flex-start; pour permettre le centrage vertical si le contenu est petit */
-        /* align-items: flex-start; */
         padding-top: 30px;
       }
       
@@ -471,6 +544,15 @@
         font-size: 0.85rem;
         margin-bottom: 20px;
         line-height: 1.4;
+      }
+
+      .template-btn {
+        padding: 10px 16px;
+        font-size: 0.8rem;
+      }
+
+      .template-icon {
+        font-size: 1rem;
       }
       
       .status-bar {
@@ -544,6 +626,11 @@
         font-size: 0.8rem;
         margin-bottom: 18px;
       }
+
+      .template-btn {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+      }
       
       .status-bar {
         padding: 12px;
@@ -597,8 +684,6 @@
     @media (max-height: 600px) and (orientation: landscape) {
       body {
         padding: 10px;
-        /* MODIFICATION: Supprimer align-items: center; pour permettre le défilement */
-        /* align-items: center; */
       }
       
       .container {
@@ -623,6 +708,15 @@
       .subtitle {
         font-size: 0.75rem;
         margin-bottom: 15px;
+      }
+
+      .nav-container {
+        margin-bottom: 15px;
+      }
+
+      .template-btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
       }
       
       .status-bar {
@@ -713,6 +807,11 @@
       .subtitle {
         font-size: 1rem;
       }
+
+      .template-btn {
+        padding: 14px 24px;
+        font-size: 1rem;
+      }
       
       .custom-install-btn {
         padding: 20px 28px;
@@ -729,26 +828,6 @@
         padding: 18px;
         max-height: 150px;
       }
-    }
-
-
-    .topnav {
-  background-color: #333;
-  overflow: hidden;
-    }
-
-    .topnav a {
-      float: left;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-      font-size: 17px;
-    }
-
-    .topnav a:hover {
-      background-color: #ddd;
-      color: black;
     }
 
     /* Scrollbar styling */
@@ -779,11 +858,16 @@
     <div class="header">
       <div class="logo">🦊 EVILFOX</div>
       <div class="title">Firmware Flasher</div>
-
     </div>
-    <nav>
-      <a href="template.html">Template</a>
-    </nav>
+
+    <div class="nav-container">
+      <div class="template-nav">
+        <a href="template.html" class="template-btn">
+          <span class="template-icon">📄</span>
+          <span>Template</span>
+        </a>
+      </div>
+    </div>
 
     <div class="status-bar">
       <div class="status-item">
@@ -826,7 +910,7 @@
     <div class="updates">
       <div class="updates-header">
         <span>🆕</span>
-        <h3>Dernières nouveautés</h3>
+        <h3>Dernières nouveautés 1.0.1</h3>
       </div>
       <div class="update-item">
         <span class="update-date">2025-07-29</span>
@@ -900,119 +984,4 @@
           
           // Visual feedback
           this.style.transform = 'scale(0.95)';
-          this.innerHTML = '<span class="btn-icon">⚡</span><span class="btn-text">Initialisation...</span>';
-          
-          setTimeout(() => {
-            this.style.transform = 'translateY(-3px) scale(1.02)';
-            
-            // Trigger the actual ESP install button click
-            try {
-              // Try different methods to trigger the ESP button
-              const espButton = hiddenBtn.shadowRoot?.querySelector('button') || hiddenBtn.querySelector('button') || hiddenBtn;
-              
-              if (espButton && typeof espButton.click === 'function') {
-                espButton.click();
-              } else {
-                // Fallback: dispatch click event
-                const clickEvent = new MouseEvent('click', {
-                  bubbles: true,
-                  cancelable: true,
-                  view: window
-                });
-                hiddenBtn.dispatchEvent(clickEvent);
-              }
-            } catch (error) {
-              console.error('Erreur lors du déclenchement du bouton ESP:', error);
-              // Fallback: try direct click
-              hiddenBtn.click();
-            }
-          }, 300);
-        });
-        
-        // Monitor ESP button state changes
-        let lastState = '';
-        const checkState = () => {
-          const currentState = hiddenBtn.getAttribute('state') || 'idle';
-          
-          if (currentState !== lastState) {
-            lastState = currentState;
-            
-            switch (currentState) {
-              case 'connecting':
-                customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Connexion USB...</span>';
-                customBtn.style.background = 'linear-gradient(135deg, #1a4d1a 0%, #2d7a2d 50%, #4caf50 100%)';
-                break;
-                
-              case 'installing':
-                customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Flash en cours...</span>';
-                customBtn.style.background = 'linear-gradient(135deg, #b8860b 0%, #daa520 50%, #ffd700 100%)';
-                break;
-                
-              case 'installed':
-                customBtn.innerHTML = '<span class="btn-icon">✅</span><span class="btn-text">Flash Terminé!</span>';
-                customBtn.style.background = 'linear-gradient(135deg, #1a5d1a 0%, #2d8f2d 50%, #4caf50 100%)';
-                setTimeout(() => {
-                  customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
-                  customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
-                }, 4000);
-                break;
-                
-              case 'error':
-                customBtn.innerHTML = '<span class="btn-icon">❌</span><span class="btn-text">Erreur Flash</span>';
-                customBtn.style.background = 'linear-gradient(135deg, #5d1a1a 0%, #8f2d2d 50%, #af4c4c 100%)';
-                setTimeout(() => {
-                  customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Réessayer</span>';
-                  customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
-                }, 3000);
-                break;
-                
-              default:
-                if (customBtn.innerHTML.includes('Initialisation')) {
-                  setTimeout(() => {
-                    customBtn.innerHTML = '<span class="btn-icon">🔌</span><span class="btn-text">Flasher Firmware</span>';
-                    customBtn.style.background = 'linear-gradient(135deg, #1a0b2e 0%, #7b2cbf 50%, #9d4edd 100%)';
-                  }, 2000);
-                }
-                break;
-            }
-          }
-        };
-        
-        // Check state periodically
-        setInterval(checkState, 200);
-        
-        // Also use MutationObserver for immediate updates
-        const observer = new MutationObserver(checkState);
-        observer.observe(hiddenBtn, { 
-          attributes: true, 
-          attributeFilter: ['state'] 
-        });
-        
-        // Listen for ESP events if available
-        hiddenBtn.addEventListener('state-changed', checkState);
-        hiddenBtn.addEventListener('install-start', () => {
-          customBtn.innerHTML = '<span class="btn-icon">🔄</span><span class="btn-text">Démarrage...</span>';
-        });
-        hiddenBtn.addEventListener('install-progress', () => {
-          customBtn.innerHTML = '<span class="btn-icon">⬇️</span><span class="btn-text">Installation...</span>';
-        });
-      }
-    });
-
-    // Add matrix-style digital rain effect on hover
-    document.querySelector('.container').addEventListener('mouseenter', function() {
-      this.style.boxShadow = `
-        0 0 40px rgba(157, 78, 221, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1)
-      `;
-    });
-
-    document.querySelector('.container').addEventListener('mouseleave', function() {
-      this.style.boxShadow = `
-        0 0 20px rgba(157, 78, 221, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1)
-      `;
-    });
-  </script>
-</body>
-</html>
+          this.innerHTML = '
