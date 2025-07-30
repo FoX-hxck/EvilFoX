@@ -6,7 +6,7 @@
       "chipFamily": "ESP32",
       "parts": [
         {
-          "path": "EvilFoX.bin",
+          "path": "EvilFoX1-0-2.bin",
           "offset": 0
         }
       ],
