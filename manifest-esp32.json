@@ -1,0 +1,17 @@
+{
+  "name": "EvilFoX Firmware",
+  "version": "1.0.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "EvilFoX.bin",
+          "offset": 0
+        }
+      ],
+      "baudRate": 115200,
+      "improv": false
+    }
+  ]
+}
