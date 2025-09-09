@@ -905,6 +905,14 @@
       animation: activeShine 2s infinite;
     }
 
+    .device-icon .icon-img {
+      width: 64px;      /* augmente la largeur */
+      height: 64px;     /* augmente la hauteur */
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;   /* centre l'image horizontalement */
+    }
+
     @keyframes activeShine {
       0% {
         left: -100%;
@@ -984,17 +992,26 @@
       </div>
       
       <div class="device-buttons">
-        <button class="device-btn" data-device="esp32" data-manifest="manifestesp32.json" data-bin="EvilFoX1-0-2.bin">
-          <div class="device-icon">📟</div>
+<!-- ESP32 -->
+        <!-- ESP32 -->
+        <button class="device-btn" data-device="esp32" data-manifest="manifest.json" data-bin="ESP32.bin">
+          <div class="device-icon">
+            <img src="esp32.png" alt="ESP32 Icon" class="icon-img">
+          </div>
           <div class="device-name">ESP32</div>
           <div class="device-desc">Standard ESP32</div>
         </button>
-        
+
+        <!-- M5StickC Plus2 -->
         <button class="device-btn" data-device="m5stick" data-manifest="manifest.json" data-bin="M5EvilFoX1-0-2.bin">
-          <div class="device-icon">📱</div>
+          <div class="device-icon">
+            <img src="m5.png" alt="M5StickC Plus2 Icon" class="icon-img">
+          </div>
           <div class="device-name">M5StickC Plus2</div>
           <div class="device-desc">M5Stack StickC Plus2</div>
         </button>
+
+
       </div>
       
       <div class="selected-device" id="selectedDevice">
@@ -1093,20 +1110,22 @@
 
   <script>
     // Device configurations
+// Device configurations
     const deviceConfigs = {
       esp32: {
         name: 'ESP32 Standard',
-        icon: '📟',
+        icon: '', // chemin vers l'image
         manifest: 'manifest-esp32.json',
         bin: 'EvilFoX1-0-2.bin'
       },
       m5stick: {
         name: 'M5StickC Plus2',
-        icon: '📱',
+        icon: '', // chemin vers l'image
         manifest: 'manifest-m5.json',
         bin: 'M5EvilFoX1-0-2.bin'
       }
     };
+
 
     let selectedDevice = null;
 
